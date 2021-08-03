@@ -3,7 +3,12 @@ const app = express();
 const env = require('dotenv');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
+
+//routes
+const userRoutes = require('./routes/user');
+
 //enviromental variables or constants
+
 env.config();
 
 app.use(bodyParser());
@@ -19,18 +24,7 @@ mongoose.connect(
         console.log('Database connected')
     });
 
-
-app.get('/',(req, res, next) => {
-    res.status(200).json({
-     message: 'hello from server'
-    });
-});
-
-app.post('/data',(req, res, next) => {
-    res.status(200).json({
-     message: req.body
-    });
-});
+app.use('/api',userRoutes);    
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`);
